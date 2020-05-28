@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.egls.server</groupId>
+    <artifactId>mybatis-async-spring-boot</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.3</version>
+
+    <!--
+    按照spring-stater开发规范，整个boot项目分为两个子模块，
+    autoconfigure和starter项目可以理解为接口与实现类的关系。
+    autoconfigure作为实现异步功能、支持自动配置的模块，其引用的依赖大部分是optional的
+    starter模块没有源码只管理依赖关系，使用者使用时只依赖此模块即可
+    -->
+    <modules>
+        <module>mybatis-async-spring-boot-autoconfigure</module>
+        <module>mybatis-async-spring-boot-stater</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.2.RELEASE</version>
+    </parent>
+
+    <properties>
+        <mybatis-starter.version>2.1.1</mybatis-starter.version>
+        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <server-util.version>2.0.1</server-util.version>
+        <jaxb.version>2.3.0</jaxb.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.encoding>UTF-8</project.build.encoding>
+        <project.build.jdk>1.8</project.build.jdk>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.egls.server</groupId>
+                <artifactId>mybatis-async-spring-boot-autoconfigure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
+                <version>${mybatis-starter.version}</version>
+            </dependency>
+
+            <!--mybatis+mysql-->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.4.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.egls.server</groupId>
+                <artifactId>utils</artifactId>
+                <version>${server-util.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <distributionManagement>
+        <repository>
+            <id>company_Repo</id>
+            <url>http://repos.eglsgame.com/repository/server_component/</url>
+        </repository>
+        <snapshotRepository>
+            <id>company_Repo</id>
+            <url>http://repos.eglsgame.com/repository/server_component_snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+    <repositories>
+        <repository>
+            <id>company.server.lib.repository</id>
+            <url>http://repos.eglsgame.com/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>company.server.lib.pluginRepository</id>
+            <url>http://repos.eglsgame.com/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <!--指定构建阶段运行-->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>source</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

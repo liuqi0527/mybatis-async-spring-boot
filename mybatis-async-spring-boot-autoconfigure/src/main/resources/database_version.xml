@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<root>
+    <version>
+        <!--entry：代表一个数据库版本，key代表版本号，value下的list节点对应本版本的表结构修改的SQL-->
+        <!--key：从1开始的数值类型，每次更新结构时，在以前的最大版本号基础上增加即可-->
+        <!--value：value下的list节点可以有多个，每个list节点写一条修改结构的SQL-->
+        <entry>
+            <key>1</key>
+            <value>
+                <list>alter table `player` add `normal_stage_challenge_data` text;</list>
+                <list>alter table `player` drop `province_id`;</list>
+            </value>
+        </entry>
+        <entry>
+            <key>2</key>
+            <value>
+                <list>alter table `item` modify `id` varchar(30) NOT NULL;</list>
+                <list>CREATE TABLE `building` (
+                    `building_id` varchar(40) NOT NULL,
+                    `player_id` bigint(20) NOT NULL,
+                    `building_type` varchar(40) NOT NULL,
+                    `building_level` int(11) NOT NULL,
+                    `building_location` varchar(40) NOT NULL,
+                    `collect_millis` bigint(20) DEFAULT NULL,
+                    `opened_items` text,
+                    `building_state` varchar(20) DEFAULT NULL,
+                    `product_target_item_id` varchar(20) DEFAULT NULL,
+                    `product_start_millis` bigint(20) DEFAULT NULL,
+                    `product_item_count` int(11) DEFAULT NULL,
+                    `time_second_per_item` bigint(20) DEFAULT NULL,
+                    `product_base_level` int(11) DEFAULT NULL,
+                    `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (`building_id`),
+                    KEY `player_building_fk` (`player_id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                </list>
+            </value>
+        </entry>
+    </version>
+</root>
